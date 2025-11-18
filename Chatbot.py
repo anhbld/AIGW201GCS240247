@@ -14,6 +14,8 @@ def open_zalo():
 def open_browser():
     subprocess.run(["powershell", "start microsoft-edge:"], shell=True)
 
+def data_analysis():
+    subprocess.run(["python", "DataAnalysis.py"])
 def chatbot():
     completion = client.chat.completions.create(
         model="local-model",
@@ -24,6 +26,7 @@ def chatbot():
                     "You are an assistant that controls applications.\n"
                     "If the user says anything about opening Zalo, respond ONLY with: open_zalo\n"
                     "If the user says anything about opening a browser, respond ONLY with: open_browser\n"
+                    "If the user says anything about data analysis , respond ONLY with: data_analysis\n"
                     "Otherwise, answer normally.\n"
                     "NEVER output anything except exactly the command when a command is required."
                 )
@@ -31,7 +34,7 @@ def chatbot():
             {"role": "user", "content": message + attachread}
         ],
         temperature=0.0,
-        max_tokens=50
+        max_tokens=-1
     )
 
     # Print the model's response
@@ -41,6 +44,8 @@ def chatbot():
         open_zalo()
     elif chatbotmessage == "open_browser":
         open_browser()
+    elif chatbotmessage == "data_analysis":
+        data_analysis()
 
 
 def clicked():
